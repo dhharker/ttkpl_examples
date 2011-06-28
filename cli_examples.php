@@ -1,13 +1,9 @@
 #!/usr/bin/php
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
- * Description of cli_examples
- *
+ * This CLI utility includes TTKPL, launches the examples and provides some helper functions.
+ * It probably isn't terribly interesting for those learning TTKPL.
  * @author david
  */
 
