@@ -1,31 +1,38 @@
 <?php
 
 /**
- * Draws a graph of global temperature anomaly over time
+ * Draws a graph of global mean temperature anomaly over the last 10000 years at 100 year intervals.
  */
 
-// Output path is created automatically if it doesn't exist, full path returned.
-$output_path = examples_output_path(EXAMPLE_NAME);
-
-/**
- * First define what time period we are interested in
- * Palaeotime objects contain a time in years "b.p." or "before present" where the "present" is
- * arbitrarily set at 1950AD.
- */
+// The following is covered in global_anomaly.example.php
 $dateRecent = new palaeoTime("NOW");
 $dateAncient = new palaeoTime(10000);
-
-
-/**
- * Next we need to look up the global anomaly (°C hotter or colder than present) over time. The
- * temperatures class contains both a continuous time series of global anomalies and global annual
- * temperature models at 0bp ("pre-industrial control"), 6kbp ("mid holocene"), 21kbp (LGM) and is
- * capable of interpolating temperatures at essentially arbitrary precision in both time and space.
- * Pretty cool, huh? Luckily it's not too hard to use:
- */
 $temps = new temperatures ();
 
 
+/**
+ * TTKPL contains some features to make reports and particularly graphs easier to generate. Graphs
+ * are made with GNUPlot and a third party interface to it.
+ */
+
+
+/**
+ * Set up to step in 100 year intervals (i.e. sample every 100th year) and iterate from our late to
+ * early date. We also want to graph these data, so lets add them directly to the graph.
+ */
+$step = 100;
+for ($yr = $dateRecent->getYearsBp(); $yr <= $dateAncient->getYearsBp(); $yr += $step) {
+    $anomalies[$yr] = $temps->getGlobalMeanAnomalyAt ($value);
+}
+
+foreach ($results as $label => $temporalDatum) {
+    printf("\tMean global temperature anomaly at %6.0f %s = %0.4f %s\n",
+            $temporalDatum->palaeoTime->timeScalar->getValue(),
+            $temporalDatum->palaeoTime->timeScalar->getUnitsLong (),
+            $temporalDatum->value->getValue(),
+            $temporalDatum->value->getUnitsLong()
+            );
+}
 
 
 ?>
