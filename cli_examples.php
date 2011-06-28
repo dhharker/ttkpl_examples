@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /* 
  * To change this template, choose Tools | Templates
@@ -9,7 +10,7 @@
  *
  * @author david
  */
-class cli_examples {
-    //put your code here
-}
+
+require_once 'lib/ttkpl/lib/ttkpl.php';
+
 ?>
