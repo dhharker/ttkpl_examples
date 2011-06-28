@@ -9,7 +9,6 @@ $dateRecent = new palaeoTime("NOW");
 $dateAncient = new palaeoTime(1000);
 $temps = new temperatures ();
 
-
 // Plot every $step'th year
 $step = 10;
 
@@ -17,7 +16,7 @@ $step = 10;
  * TTKPL contains some features to make reports and particularly graphs easier to generate. Graphs
  * are made with GNUPlot and a third party interface to it. Lets set up a new plot.
  */
-$tempDir = $tempDir = examples_output_path(EXAMPLE_NAME); // (The GNUPlot lib reads this via global :-o
+$tempDir = examples_output_path(EXAMPLE_NAME); // (The GNUPlot lib reads this via global :-o
 $plot = new ttkplPlot("Global mean temperature anomaly from " . 
         $dateRecent->getYearsBp() .
         " b.p. to " . 
