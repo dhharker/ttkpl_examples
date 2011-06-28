@@ -1,0 +1,3 @@
+[submodule "lib/ttkpl"]
+	path = lib/ttkpl
+	url = git://github.com/dhharker/ttkpl.git
