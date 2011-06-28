@@ -48,10 +48,11 @@ function examples_data_path () {
     return dirname(realpath (__FILE__)).'/example_data/';
 }
 function examples_output_path ($name = NULL) {
-    static $n = NULL; $n = ($n === NULL) ? $n : $name; // Only allow name to be set once
+    static $n = NULL; $n = ($n === NULL) ? $name : $n; // Only allow name to be set once
     $path = dirname(realpath (__FILE__)).'/output/' . $n . '/';
     if (!is_dir ($path))
         mkdir ($path) or die ("Couldn't create $path to save output :-(\n");
+    return $path;
 }
 
 // Load TTKPL
