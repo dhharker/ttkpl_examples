@@ -6,7 +6,7 @@
  */
 
 // The following is covered in previous examples
-$dateRecent = new palaeoTime(100);
+$dateRecent = new palaeoTime(10);
 $dateAncient = new palaeoTime(50000);
 $temps = new temperatures ();
 $step = 250;
@@ -49,7 +49,7 @@ $plot = new ttkplPlot("Global and local climate (" .
         " year intervals)"
         );
 
-$plot->labelAxes("Years b.p.", "°C")->setGrid('y')
+$plot->labelAxes("Years b.p.", "°C")->setGrid('y')->set("style fill transparent solid 0.35")
         ->setData("Time-interpolated local annual max/min daily mean air temperature (°C)", 0, 'x1y1', 'filledcurves', '1:2:3')
         ->setData("Time-interpolated local annual mean daily mean air temperature (°C)", 3, 'x1y1', 'lines', '1:2')
         ->setData("Global mean anomaly (+/-°C of pre-industrial)",          1, 'x1y1', 'lines')
@@ -74,7 +74,6 @@ foreach ($temps->whens as $pmipTimeConst) {
     $min = $mean - $fluctuation;
     $max = $mean + $fluctuation;
     $yr = pmip::ptcToPalaeoTime($pmipTimeConst)->getYearsBp();
-    echo "$yr, $mean, $min, $max\n";
     $plot->addDataAssoc(array (array ($yr, $mean, $min, $max)), 2);
 
 }
@@ -127,7 +126,7 @@ for ($yr = $dateRecent->getYearsBp(); $yr <= $dateAncient->getYearsBp(); $yr += 
  *
  */
 
-$f = $tempDir . 'global_mean_temperature_anomaly.png';
+$f = $tempDir . 'local_climate_interpolation.png';
 if ($plot->plot($f))
     echo "Wrote graph to $f\n";
 
