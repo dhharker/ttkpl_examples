@@ -51,9 +51,9 @@ $plot = new ttkplPlot("Global and local climate (" .
 
 $plot->labelAxes("Years b.p.", "°C")->setGrid('y')->set("style fill transparent solid 0.35")
         ->setData("Time-interpolated local annual max/min daily mean air temperature (°C)", 0, 'x1y1', 'filledcurves', '1:2:3')
-        ->setData("Time-interpolated local annual mean daily mean air temperature (°C)", 3, 'x1y1', 'lines', '1:2')
-        ->setData("Global mean anomaly (+/-°C of pre-industrial)",          1, 'x1y1', 'lines')
-        ->setData("HADCM3M2 local max/mean/min daily mean air temperature (°C)",           2, 'x1y1', 'yerrorbars', '1:2:3:4');
+        ->setData("Time-interpolated local annual mean daily mean air temperature (°C)",    3, 'x1y1', 'lines', '1:2')
+        ->setData("Global mean anomaly (+/-°C of pre-industrial)",                          1, 'x1y1', 'lines')
+        ->setData("HADCM3M2 local max/mean/min daily mean air temperature (°C)",            2, 'x1y1', 'yerrorbars', '1:2:3:4');
 
 
 /**
@@ -110,7 +110,6 @@ for ($yr = $dateRecent->getYearsBp(); $yr <= $dateAncient->getYearsBp(); $yr += 
     $mean = $localTemperatureSineThisYear->Ta + scalarFactory::kelvinOffset;
     $min = $mean - $localTemperatureSineThisYear->A0;
     $max = $mean + $localTemperatureSineThisYear->A0;
-    //$plot->addData($yr, $mean, 1);
     $plot->addDataAssoc(array (array ($yr, $min, $max)), 0);
     $plot->addData($yr, $mean, 3);
 }
@@ -118,12 +117,6 @@ for ($yr = $dateRecent->getYearsBp(); $yr <= $dateAncient->getYearsBp(); $yr += 
 
 /**
  * And there you have it. Hopefully it worked!
- *
- * Tip: When you draw graphs with higher sampling densities than the underlying dataset (e.g. every
- * 10 years), the way the temperatures are transparently interpolated between points can be seen
- * clearly by changing the style of the data series to 'linespoints' above, e.g.:
- * $plot->...->setData("Global Mean Anomaly", 0, 'x1y1', 'linespoints');
- *
  */
 
 $f = $tempDir . 'local_climate_interpolation.png';
