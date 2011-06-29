@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Example #2
  * Draws a graph of global mean temperature anomaly over the last 120000 years at 50 year intervals.
  */
 
@@ -10,7 +11,7 @@ $dateAncient = new palaeoTime(120000);
 $temps = new temperatures ();
 
 // Plot every $step'th year
-$step = 50;
+$step = 100;
 
 /**
  * TTKPL contains some features to make reports and particularly graphs easier to generate. Graphs

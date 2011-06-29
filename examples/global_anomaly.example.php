@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * Example #1
  * Looks up temperature anomaly and outputs it to the console.
  */
 
