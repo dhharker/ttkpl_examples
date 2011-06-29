@@ -67,14 +67,14 @@ $plot->labelAxes("Years b.p.", "°C")->setGrid('y')->set("style fill transparent
  */
 
 foreach ($temps->whens as $pmipTimeConst) {
-    $mean = $temps->getLocalMeanTempAt ($location, $pmipTimeConst)->getScalar()->getValue();
-    $amplitude = $temps->getLocalAmplitudeAt ($location, $pmipTimeConst)->getScalar()->getValue();
-    $fluctuation = $amplitude / 2;
-    $mean += scalarFactory::kelvinOffset;
-    $min = $mean - $fluctuation;
-    $max = $mean + $fluctuation;
-    $yr = pmip::ptcToPalaeoTime($pmipTimeConst)->getYearsBp();
-    $plot->addDataAssoc(array (array ($yr, $mean, $min, $max)), 2);
+    $mean = $temps->getLocalMeanTempAt ($location, $pmipTimeConst)->getScalar()->getValue() + scalarFactory::kelvinOffset;
+    $fluctuation = $temps->getLocalAmplitudeAt ($location, $pmipTimeConst)->getScalar()->getValue() / 2;
+    $plot->addDataAssoc(array (array (
+        pmip::ptcToPalaeoTime($pmipTimeConst)->getYearsBp(),
+        $mean,
+        $mean - $fluctuation,
+        $mean + $fluctuation,
+    )), 2);
 
 }
 
