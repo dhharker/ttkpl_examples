@@ -58,12 +58,12 @@ $climate = new sine();
 $climate->setGenericSine(
         scalarFactory::makeCentigradeAbs(10),
         scalarFactory::makeKelvinAnomaly(12),
-        scalarFactory::makeDays(0)
+        scalarFactory::makeDays(1)
         );
 
 $tempDir = examples_output_path(EXAMPLE_NAME);
 
-$plot = new ttkplPlot("The effects of burial on temperature amplitude");
+$plot = new ttkplPlot("The effects of burial on temperature amplitude (note phase lag NOT shown)");
 
 $plot->labelAxes("days", "°C")->setGrid('y')
         ->setData("Unburied surface temperature", 0)
@@ -71,8 +71,8 @@ $plot->labelAxes("days", "°C")->setGrid('y')
         ->setData("Average daily temperature buried under " . $moderateBurial, 2)
         ->setData("Average daily temperature buried under " . $muchBurial, 3);
 
-for ($day = 0; $day <= sine::yearLength; $day++)
-    $plot->addData($day, $littleBurial->getBufferedSine($climate)->getValue($day), 0)
+for ($day = 1; $day <= sine::yearLength; $day++)
+    $plot->addData($day, $climate->getValue($day), 0)
             ->addData($day, $littleBurial->getBufferedSine($climate)->getValue($day), 1)
             ->addData($day, $moderateBurial->getBufferedSine($climate)->getValue($day), 2)
             ->addData($day, $muchBurial->getBufferedSine($climate)->getValue($day), 3);
