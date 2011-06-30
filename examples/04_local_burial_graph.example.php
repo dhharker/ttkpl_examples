@@ -10,7 +10,7 @@
  * a series of layers (i.e. of soil) which each have a thickness in metres and a thermal diffusivity
  * in m^2·s^-1. The order of these layers doesn't influence their net effect on the sample temperature
  * (however in reality the chemical composition, hydrodrynamic environment, pH etc. all play a part
- * and so order matters somewhat here, but these are not currently modelled by TTKPL so never mind).
+ * and so order could matter, but these are not currently modelled by TTKPL so never mind).
  *
  * You can think of thermal diffusivity as "how fast changes in temperature at the surface will
  * permeate down through the soil layer".
@@ -58,7 +58,7 @@ $climate = new sine();
 $climate->setGenericSine(
         scalarFactory::makeCentigradeAbs(10),
         scalarFactory::makeKelvinAnomaly(12),
-        scalarFactory::makeDays(1)
+        scalarFactory::makeDays(250)
         );
 
 $tempDir = examples_output_path(EXAMPLE_NAME);
