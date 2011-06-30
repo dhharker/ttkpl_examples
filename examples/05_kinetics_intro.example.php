@@ -19,6 +19,7 @@ $depurination = new kinetics (
         "DNA depurination (bone)"
         );
 
+
 /**
  * Let's plot rate of reaction against temperature to fully understand the importance of not keeping
  * samples in hot places (the relationship is exponential - NOTE LOG Y SCALE)!
@@ -27,11 +28,13 @@ $plot = new ttkplPlot("Rate of Reaction vs. Temperature");
 $plot->labelAxes("Temperature (°C)", "k (mol·s^-1)")->setGrid('x')->setGrid('y')->setLog('y')
         ->setData("DNA Depurination");
 
+
 for ($temperature = -20; $temperature <= 50; $temperature++)
     $plot->addData(
             $temperature,
-            $depurination->getRate(scalarFactory::makeCentigradeAbs($temperature))
-                ->getValue()
+            $depurination->getRate(
+                    scalarFactory::makeCentigradeAbs($temperature)
+                )->getValue()
             );
 
 
