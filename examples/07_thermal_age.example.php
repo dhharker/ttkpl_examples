@@ -34,16 +34,16 @@ $graveLocation = new latLon (51.15579196587064, -2.2412109375); // <-- middle of
 $localisingCorrections = $temps->getPalaeoTemperatureCorrections ($graveLocation);
 
 // What's it buried under?
-$topSoil = new thermalLayer(scalarFactory::makeMetres(0.5), scalarFactory::makeThermalDiffusivity (0.1), "Hypothetical dry, peaty soil.");
-$subSoil = new thermalLayer(scalarFactory::makeMetres(1.8), scalarFactory::makeThermalDiffusivity (0.18), "Hypothetical dry, clay soil.");
+$topSoil = new thermalLayer(scalarFactory::makeMetres(1.5), scalarFactory::makeThermalDiffusivity (0.1), "Hypothetical dry, peaty soil.");
+$subSoil = new thermalLayer(scalarFactory::makeMetres(2.8), scalarFactory::makeThermalDiffusivity (0.18), "Hypothetical dry, clay soil.");
 $grave = new burial();
 $grave->addThermalLayer($topSoil);
 $grave->addThermalLayer($subSoil);
 
 // Incidentally, you can give all manner of things to palaeoTime as long as the number is a number of years!
 $today = new palaeoTime ("NOW");
-$excavation = new palaeoTime ("-2");
-$wayBackWhen = new palaeoTime ("4000 bc");
+$excavation = new palaeoTime ("-37");
+$wayBackWhen = new palaeoTime ("4000");
 
 // We've defined everything we need to describe the burial, lets put it all together in a temporothermal
 $timeUnderground = new temporothermal ();
@@ -80,10 +80,13 @@ $thermalAge->addTemporothermal ($timeUnderground);
 $thermalYearsScalar = $thermalAge->getThermalAge ();
 $age = $thermalAge->getAge();
 
-printf ("The sample has an age of %d years versus a thermal age of %d years.",
+printf ("The sample has an age of %d years but a thermal age of %d years. Its effective temperature over this time was %0.2f°C",
         $age,
-        $thermalYearsScalar->getValue()
+        $thermalYearsScalar->getValue(),
+        $thermalAge->getTeff()->getValue() + scalarFactory::kelvinOffset
         );
 
+
+$thermalAge->_nukeDataMess();
 //print_r ($thermalAge);
 
