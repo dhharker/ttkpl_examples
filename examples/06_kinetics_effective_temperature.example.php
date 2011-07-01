@@ -37,17 +37,69 @@ $varClimate->setGenericSine(
 $storage = scalarFactory::makeCentigradeAbs(10);
 
 
+
 /**
- * Now to find out how much the DNA decays in a year!
+ * Now to find out how much the DNA decays in a year, and make some more graphs!
+ * Setup us the plot first
  */
+$tempDir = examples_output_path(EXAMPLE_NAME);
+$plot = new ttkplPlot("Effective Temperature");
+$plot->labelAxes("Day", "Temperature (°C)", '', "k (mol·s^-1)")->setGrid('x')
+        ->setData("Mean daily air temperature (°C)", 0, 'x1y1')
+        ->setData("Rate of depurination at given daily temperature (mol·s^-1)", 1, 'x1y2')
+        ->setData("Rate of depurination at 10°C (mol·s^-1)", 2, 'x1y2')
+        ->setData("Effective Temperature (°C)", 3, 'x1y1');
+
+/**
+ * First lets draw a couple of horizontal lines across the graph to highlight 10C and the rate at 10C
+ * otherwise it's not so clear...
+ */
+$sR = $depurination->getRate($storage)->getValue();
+$sT = $storage->getValue();
+foreach (array (1,365) as $day)
+    $plot->addData($day, $sR, 2);
+
+$varRate = array ();
 for ($day = 1; $day <= 365; $day++) {
-    $varRate = $depurination->getRate($varClimate->getValue($day));
-    $storeRate = $depurination->getRate($storage);
+    /**
+     * How fast is the DNA decaying today?
+     * Note our use of the sine::getValueScalar method instead of sine::getValue, which returns a
+     * double, which the kinetics class doesn't want because it's a bit ambiguous.
+     */
+    $tToday = $varClimate->getValueScalar ($day);
+    $rToday = $depurination->getRate($tToday);
+    $varRate[] = $rToday->getValue();
+
+    $plot->addData($day, $tToday->getValue() + scalarFactory::kelvinOffset, 0)
+         ->addData($day, $rToday->getValue(), 1);
 }
 
+/**
+ * Next we'll calculate the effective temperature. The temperature which causes the k to equal the
+ * mean of k over the year of fluctuating temperature.
+ */
+$meanDailyK = scalarFactory::makeMolesPerSecond(cal::mean($varRate));
+$effectiveTemperature = scalarFactory::makeCentigradeAbs($depurination->getTempAtRate($meanDailyK));
+// And plot it
+foreach (array (1,365) as $day)
+    $plot->addData($day, $effectiveTemperature->getValue(), 3);
 
-$tempDir = examples_output_path(EXAMPLE_NAME);
-$fn = $tempDir . "rate_of_reaction_temperature.png";
+// Save our plot...
+$fn = $tempDir . "rate_of_reaction_effective_temperature.png";
 $plot->plot($fn);
+
+
+/**
+ * And let's output some stuff to the console just for giggles...
+ */
+printf ("Over 365 days sine %s, effective temperature is %0.1f°C." .
+        " (i.e. the sample is as degraded after a year in the sine temperatures as it would be after a year constantly at the effective temperature)" .
+        "\nEffective temperature of a sample" .
+        " at a constant 10°C is %0.1f (it really should be 10!)\n",
+        $varClimate,
+        $effectiveTemperature->getValue(),
+        scalarFactory::makeCentigradeAbs($depurination->getTempAtRate($depurination->getRate($storage)))->getValue()
+        );
+
 
 ?>
