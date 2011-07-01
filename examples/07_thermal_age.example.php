@@ -68,25 +68,22 @@ $timeInGarage->setTimeRange($excavation, $today);
 /**
  * Up to this point there's not much new, however instead of crunching a load of stuff by hand as
  * we did in example 4, we'll get to know some of the shortcuts. At this point we've got two
- * temporothermals, so two spans of time in a known temperature. You know those
- *          ...shortcuts I mentioned?
+ * temporothermals, so two spans of time in a known temperature. Let's mix them all up together:
  */
 $thermalAge = new thermalAge ();
 $thermalAge->setKinetics ($depurination);
 $thermalAge->addTemporothermal ($timeInGarage);
 $thermalAge->addTemporothermal ($timeUnderground);
 
-
+// This method call is what kicks off all the little hamsters running in their little wheels
 $thermalYearsScalar = $thermalAge->getThermalAge ();
-$age = $thermalAge->getAge();
 
-printf ("The sample has an age of %d years but a thermal age of %d years. Its effective temperature over this time was %0.2f°C",
-        $age,
+// That's it - all done now!
+
+printf ("The sample has an age of %d years but a thermal age of %d 10°C thermal years. Its effective temperature over this time was %0.2f°C",
+        $thermalAge->getAge(),
         $thermalYearsScalar->getValue(),
         $thermalAge->getTeff()->getValue() + scalarFactory::kelvinOffset
         );
 
-
-$thermalAge->_nukeDataMess();
-//print_r ($thermalAge);
-
+?>
