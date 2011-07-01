@@ -102,4 +102,13 @@ printf ("Over 365 days sine %s, effective temperature is %0.1f°C." .
         );
 
 
+/**
+ * @todo move this paragraph of commentage somewhere more relevant
+ * Notice above, getTempAtRate returns a scalar in units kelvin, we create a new scalar in centigrade
+ * and the scalar factory has automatically populated the new °C scalar with a function to convert from
+ * kelvins so it does it automatically. This is equivalent to adding scalarFactory::kelvinOffset
+ * (adding because it's negative) on outputting the number as we've done elsewhere e.g. in the plot data.
+ */
+
+
 ?>
