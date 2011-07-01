@@ -40,10 +40,10 @@ $grave = new burial();
 $grave->addThermalLayer($topSoil);
 $grave->addThermalLayer($subSoil);
 
-// Incidentally, you can give all manner of things to palaeoTime as long as the number is a number of years!
+// palaeoTimes always contain years "before 1950". sp 2011 is -61 years b.p. Yup. Feature, not bug ;)
 $today = new palaeoTime ("NOW");
-$excavation = new palaeoTime ("-37");
-$wayBackWhen = new palaeoTime ("4000");
+$excavation = new palaeoTime (-37);
+$wayBackWhen = new palaeoTime (4000);
 
 // We've defined everything we need to describe the burial, lets put it all together in a temporothermal
 $timeUnderground = new temporothermal ();
