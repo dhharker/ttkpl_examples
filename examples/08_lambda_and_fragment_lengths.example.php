@@ -11,10 +11,10 @@
  */
 
 function Pb ($length, $lambda) {
-    return 1 - pow ($lambda, $length - 1);
+    return pow ($lambda, $length - 1);
 }
 function Ps ($length, $lambda) {
-    return pow ($lambda, $length - 1);
+    return 1 - Pb($length, $lambda);
 }
 
 $plot = new ttkplPlot("Effect of λ on fragment length distribution");
