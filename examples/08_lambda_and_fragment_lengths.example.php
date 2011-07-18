@@ -11,7 +11,9 @@
  */
 
 function Pb ($length, $lambda) {
-    return pow ($lambda, $length - 1);
+    $pb = pow ($lambda, $length - 1);
+    echo "Pb ($length, $lambda) = $pb\n";
+    return $pb;
 }
 function Ps ($length, $lambda) {
     return 1 - Pb($length, $lambda);
@@ -22,11 +24,11 @@ $plot->labelAxes("DNA Fragment Length", "Relative Probability of survival throug
         ->setGrid(array ('x','y'));
 
 $gi = 0;
-foreach (array (0.019743104519695, 0.03, 0.0005) as $λ) {
-    $mcl = round ((1/$λ)+1);
-    $plot->setData("λ = $λ (mfl=$mcl)", ++$gi);
-    for ($l = 1; $l <= 10; $l += .05)
-        $plot->addData ($l, (Ps ($l, $λ) * 1), $gi);
+foreach (array (0.019743104519695, .0003) as $λ) {
+    $mfl = round ((1/$λ)+1);
+    $plot->setData("λ = $λ (mfl=$mfl)", ++$gi);
+    for ($l = 2; $l <= 200; $l += 1    )
+        $plot->addData ($l, Ps ($l, $λ), $gi);
 }
 
 
