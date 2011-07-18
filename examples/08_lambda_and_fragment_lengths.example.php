@@ -18,17 +18,24 @@ function Ps ($length, $lambda) {
     return pow (1 - $lambda, $length - 1);
 }
 
+$gi = 1;
+
 $plot = new ttkplPlot("Effect of λ on fragment length distribution");
 $plot->labelAxes("DNA Fragment Length", "Relative Probability of survival through not-being-depurinated")
-        ->setGrid(array ('x','y'));
+        ->setGrid(array ('x','y'))
+        ->setLog(array ('x','y'))
+        ->setData ("Mean Fragment Lengths", 1, 'x1y1', 'points');
 
-$gi = 0;
-foreach (array (0.019743104519695, .0003) as $λ) {
+$λ = .5;
+do {
     $mfl = round ((1/$λ)+1);
-    $plot->setData("λ = $λ (mfl=$mfl)", ++$gi);
-    for ($l = 2; $l <= 200; $l += 1    )
+    $plot->setData ("λ = $λ (mfl=$mfl)", ++$gi)
+         ->addData ($mfl, Ps ($mfl, $λ), 1);
+
+    for ($l = 2; $l <= $mfl * 3; $l += 1    )
         $plot->addData ($l, Ps ($l, $λ), $gi);
-}
+    $λ *= 0.5;
+} while ($λ > 1E-4);
 
 
 
