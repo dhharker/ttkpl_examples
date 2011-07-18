@@ -23,7 +23,7 @@ $gi = 1;
 $plot = new ttkplPlot("Effect of λ on fragment length distribution");
 $plot->labelAxes("DNA Fragment Length", "Relative Probability of survival through not-being-depurinated")
         ->setGrid(array ('x','y'))
-        ->setLog(array ('x','y'))
+        ->setLog(array ('x'))
         ->setData ("Mean Fragment Lengths", 1, 'x1y1', 'points');
 
 $λ = .5;
