@@ -33,7 +33,7 @@ do {
     $plot->setData ("λ = $λ (mfl=$mfl)", ++$gi)
          ->addData ($mfl, Ps ($mfl, $λ), 1);
 
-    for ($l = 0; $l <= $mfl * 6; $l += 1    )
+    for ($l = 0; $l <= $mfl * 6; $l += unprecision($l))
         $plot->addData ($l, Ps ($l, $λ), $gi);
     $λ *= 0.5;
 } while ($λ > 1E-4);
@@ -41,5 +41,16 @@ do {
 
 
 $tempDir = examples_output_path(EXAMPLE_NAME);
-$fn = $tempDir . "lambdas_fragment_lengths.png";
+$fn = $tempDir . "lambdas_fragment_lengths.svg";
 $plot->plot($fn);
+
+
+
+/**
+ * ignore this if you like, it's just to make the graph render faster in svg by plotting points
+ * decresingly often as we approach longer lengths (log graph innit)
+ */
+function unprecision ($x, $precision = 5) {
+    $n = ceil ($x / $precision);
+    return ($n < 1) ? 1 : $n;
+}
