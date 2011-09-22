@@ -8,7 +8,7 @@
 /**
  * There are a few classes in TTKPL which help us model the effects of burial. Burial is modelled as
  * a series of layers (i.e. of soil) which each have a thickness in metres and a thermal diffusivity
- * in m^2·s^-1. The order of these layers doesn't influence their net effect on the sample temperature
+ * in m^2·day^-1. The order of these layers doesn't influence their net effect on the sample temperature
  * (however in reality the chemical composition, hydrodrynamic environment, pH etc. all play a part
  * and so order could matter, but these are not currently modelled by TTKPL so never mind).
  *
